@@ -151,12 +151,13 @@ StripPath(const char * path)
 void
 init_default_parameters()
 {
-	simu_parameters.assoc = 8;
-	simu_parameters.nb_sets = 2048;
+//	simu_paramters=
+//	simu_parameters.assoc = 8;
+	simu_parameters.nb_sets = simu_parameters.size/(simu_parameters.assoc * BLOCK_SIZE);
 
-	simu_parameters.prefetchDegree = 2;
-	simu_parameters.prefetchStreams = 16; 
-	simu_parameters.enablePrefetch = true;
+	simu_parameters.prefetchDegree = 4;
+	simu_parameters.prefetchStreams = 64; 
+//	simu_parameters.enablePrefetch = false;
 
 	simu_parameters.policy = "LRU";
 }

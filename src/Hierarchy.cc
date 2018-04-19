@@ -26,9 +26,9 @@ Hierarchy::Hierarchy(const Hierarchy& a)
 Hierarchy::Hierarchy(string policy)
 {
 	
-	int nb_sets = simu_parameters.nb_sets;
+//	int nb_sets = simu_parameters.nb_sets;
 	int assoc = simu_parameters.assoc;
-	int size = assoc * nb_sets * BLOCK_SIZE;
+	int size = simu_parameters.size;
 
 	m_prefetcher = new SimplePrefetcher( simu_parameters.prefetchDegree , simu_parameters.prefetchStreams , true);
 
@@ -87,10 +87,10 @@ Hierarchy::printResults(ostream& out)
 }
 
 void
-Hierarchy::printinterval(ostream& out)
+Hierarchy::printinterval(ostream& out, ostream& out2, unsigned long long int x)
 {
 
-	m_cache->printinterval(out);
+	m_cache->printinterval(out, out2, x);
 }
 
 void

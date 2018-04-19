@@ -25,7 +25,7 @@ class Hierarchy
 		void handleAccess(Access element);
 		void signalWB(uint64_t addr, bool isDirty);
 		void printResults(std::ostream& out);
-		void printinterval(std::ostream& out);
+		void printinterval(std::ostream& out, std::ostream& out2, long long unsigned int);
 		void printConfig(std::ostream& out);
 		void finishSimu();
 		void openNewTimeFrame();

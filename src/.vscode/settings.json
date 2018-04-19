@@ -5,6 +5,7 @@
         "initializer_list": "cpp",
         "utility": "cpp",
         "chrono": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "iosfwd": "cpp"
     }
 }

@@ -167,9 +167,9 @@ Cache::handleAccess(Access element)
 			
 		if(!m_isWarmup){				
 			stats_miss[stats_index]++;			
-			stats_hits[1]++; // The insertion write 
+		//	stats_hits[1]++; // The insertion write 
 			misses[stats_index]++;	//hassan		
-			hits[1]++; // The insertion write, hassan
+		//	hits[1]++; // The insertion write, hassan
 		}
 		if(element.isWrite())
 			m_dataArray[id_set][id_assoc]->isDirty = true;
@@ -364,12 +364,15 @@ Cache::print(ostream& out)
 }
 
 void 
-Cache::printinterval(ostream& out) 
+Cache::printinterval(ostream& out, ostream& out2, unsigned long long int x) 
 {
 	string entete = "Cache";
 	uint64_t total_miss =  misses[0] + misses[1];
 	uint64_t total_access =  hits[0] + hits[1];
+//	out << total_miss << "..." << total_access << "..." << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
+//	out2 << total_miss << "..." << x << "..." << (double)(total_miss)*1000 / (double)(x) << endl;
 	out << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
+	out2 << (double)(total_miss)*1000 / (double)(x) << endl;
 	misses[0] = 0;
 	misses[1] = 0;
 	hits[0] = 0;
@@ -394,15 +397,15 @@ void
 Cache::printResults(std::ostream& out) 
 {
 	uint64_t total_miss =  stats_miss[0] + stats_miss[1];
-	uint64_t total_access =  stats_hits[0] + stats_hits[1];
-	
+	uint64_t total_access =  stats_hits[0] + stats_hits[1] + stats_miss[0] + stats_miss[1];
+	uint64_t total_hits = stats_hits[0] + stats_hits[1];
 	string entete = "Cache";
 
 	if(total_miss != 0){
 	
 		out << entete << ":Results" << endl;
 		out << entete << ":TotalAccess\t"<< total_access << endl;
-		out << entete << ":TotalHits\t" << total_access - total_miss << endl;
+		out << entete << ":TotalHits\t" << total_hits << endl;
 		out << entete << ":TotalMiss\t" << total_miss << endl;		
 		out << entete << ":MissRate\t" << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
 		out << entete << ":Eviction\t" << stats_evict << endl;	

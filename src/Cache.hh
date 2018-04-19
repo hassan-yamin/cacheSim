@@ -47,7 +47,7 @@ class Cache {
 		void printResults(std::ostream& out);
 		void printConfig(std::ostream& out);
 		void print(std::ostream& out);
-		void printinterval(std::ostream& out);
+		void printinterval(std::ostream& out, std::ostream& out2, unsigned long long int);
 
 		bool lookup(Access element);
 		int addressToCacheSet(uint64_t address);
