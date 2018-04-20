@@ -20,7 +20,7 @@ static UINT64 icount = 0;
 uint64_t mem_accesses_interval; //memory accesses per interval
 long long unsigned int num_accesses; //total number of memory accesses to monitor.... or memory accesses to run
 //ofstream log_file;
-ofstream output_file;
+ofstream output_file; // results file
 ofstream config_file; //configuration file
 ofstream miss_rate; // miss rate per interval dump	
 ofstream mpki; //mpki per interval dump

@@ -165,7 +165,7 @@ Cache::handleAccess(Access element)
 		allocate(address , id_set , id_assoc, element.m_pc, element.isPrefetch());			
 		m_replacementPolicy->insertionPolicy(id_set , id_assoc , 0);
 			
-		if(!m_isWarmup){				
+		if(!m_isWarmup && !element.isPrefetch()){				
 			stats_miss[stats_index]++;			
 		//	stats_hits[1]++; // The insertion write 
 			misses[stats_index]++;	//hassan		
@@ -190,7 +190,7 @@ Cache::handleAccess(Access element)
 		else
 			current->nbRead++;
 
-		if(!m_isWarmup)
+		if(!m_isWarmup && !element.isPrefetch()) //dont count the prefetch...
 			{
 				stats_hits[stats_index]++;
 				hits[stats_index]++;
@@ -368,11 +368,11 @@ Cache::printinterval(ostream& out, ostream& out2, unsigned long long int x)
 {
 	string entete = "Cache";
 	uint64_t total_miss =  misses[0] + misses[1];
-	uint64_t total_access =  hits[0] + hits[1];
-//	out << total_miss << "..." << total_access << "..." << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
-//	out2 << total_miss << "..." << x << "..." << (double)(total_miss)*1000 / (double)(x) << endl;
-	out << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
-	out2 << (double)(total_miss)*1000 / (double)(x) << endl;
+	uint64_t total_access =  hits[0] + hits[1] + misses[0] + misses[1];
+	out << total_miss << "..." << total_access << "..." << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
+	out2 << total_miss << "..." << x << "..." << (double)(total_miss)*1000 / (double)(x) << endl;
+//	out << (double)(total_miss)*100 / (double)(total_access) << "%"<< endl;
+//	out2 << (double)(total_miss)*1000 / (double)(x) << endl;
 	misses[0] = 0;
 	misses[1] = 0;
 	hits[0] = 0;
