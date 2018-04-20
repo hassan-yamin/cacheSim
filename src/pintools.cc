@@ -17,12 +17,14 @@ int start_debug;
 // The running count of instructions is kept here
 // make it static to help the compiler optimize docount
 static UINT64 icount = 0;
-long long unsigned int num_accesses;
+uint64_t mem_accesses_interval; //memory accesses per interval
+long long unsigned int num_accesses; //total number of memory accesses to monitor.... or memory accesses to run
 //ofstream log_file;
 ofstream output_file;
-ofstream config_file;
-ofstream miss_rate;
-ofstream mpki;
+ofstream config_file; //configuration file
+ofstream miss_rate; // miss rate per interval dump	
+ofstream mpki; //mpki per interval dump
+ofstream accessfile; // number of accesses per interval dump
 PIN_LOCK lock;
 
 bool startInstruFlag;
@@ -31,8 +33,11 @@ bool startInstruFlag;
 inline VOID docount() { 
 	icount++; 
 	if (icount % interval == 0)
+	{
 		my_system->printinterval(miss_rate, mpki, interval);
-	
+		accessfile << mem_accesses_interval << endl;
+		mem_accesses_interval = 0;
+	}
 	if (cpt_time == num_accesses)
 		
 		PIN_ExitApplication(0);
@@ -47,6 +52,7 @@ VOID access(uint64_t pc , uint64_t addr, MemCmd type, int size, int id_thread)
 	my_access.m_idthread = 0;
 	my_system->handleAccess(my_access);		
 	cpt_time++;
+	mem_accesses_interval++;
 	PIN_ReleaseLock(&lock);
 }
 
@@ -113,20 +119,22 @@ VOID Routine(RTN rtn, VOID *v)
 VOID Fini(INT32 code, VOID *v)
 {
 	cout << "EXECUTION FINISHED" << endl;
-	cout << "NB Access handled " << cpt_time << endl;
-	cout << "NB insts handled " << icount << endl;
-	cout << "last interval " << icount %interval  << endl;
+	
 	my_system->finishSimu();
-
+	accessfile << mem_accesses_interval << endl;
 	my_system->printinterval(miss_rate, mpki, icount % interval); //print to miss rate file
 	miss_rate.close(); //close the miss rate file
 	mpki.close(); //clode the mpki dump file
+	accessfile.close(); //close the accesses per interval dump file
 	config_file.open(CONFIG_FILE);
 	my_system->printConfig(config_file);
 	config_file.close();
 
 	output_file.open(OUTPUT_FILE);
 	output_file << "Execution finished" << endl;
+	output_file << "NB Access handled " << cpt_time << endl;
+	output_file << "NB insts handled " << icount << endl;
+	output_file << "last interval " << icount %interval  << endl;
 	output_file << "Printing results : " << endl;
 	my_system->printResults(output_file);
 	output_file.close();
@@ -161,6 +169,7 @@ int main(int argc, char *argv[])
 				}
 	PIN_InitSymbols();
 	PIN_Init(argc, argv);
+	mem_accesses_interval = 0;
 	//if (PIN_Init(argc, argv)) return Usage();
 /*	std::printf("Program Name Is: %s",argv[0]);
     if(argc==1)
@@ -197,6 +206,7 @@ int main(int argc, char *argv[])
 	my_system->stopWarmup();
 	miss_rate.open(MISS_RATE); //open the miss rate file
 	mpki.open(MPKI); //open the periodic mpki dump file
+	accessfile.open(ACCESSES); //open the accesses per interval dump
 	RTN_AddInstrumentFunction(Routine, 0);
 	PIN_AddFiniFunction(Fini, 0);
 	// Never returns

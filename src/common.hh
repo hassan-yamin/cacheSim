@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define OUTPUT_FILE "results.out"
 #define MISS_RATE "missrate.txt"
 #define MPKI "mpki.txt"
+#define ACCESSES "num_accesses.txt" //num of accesses per interval
 
 #define PREDICTOR_TIME_FRAME 1E5
 #define interval 100000
