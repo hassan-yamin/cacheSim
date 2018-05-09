@@ -25,6 +25,8 @@ ofstream config_file; //configuration file
 ofstream miss_rate; // miss rate per interval dump	
 ofstream mpki; //mpki per interval dump
 ofstream accessfile; // number of accesses per interval dump
+ofstream prefetch_issued; //prefetch issued this interval
+ofstream prefetch_hits; // prefetcher hits this interval
 PIN_LOCK lock;
 
 bool startInstruFlag;
@@ -34,7 +36,7 @@ inline VOID docount() {
 	icount++; 
 	if (icount % interval == 0)
 	{
-		my_system->printinterval(miss_rate, mpki, interval);
+		my_system->printinterval(miss_rate, mpki, interval, prefetch_issued, prefetch_hits);
 		accessfile << mem_accesses_interval << endl;
 		mem_accesses_interval = 0;
 	}
@@ -122,10 +124,12 @@ VOID Fini(INT32 code, VOID *v)
 	
 	my_system->finishSimu();
 	accessfile << mem_accesses_interval << endl;
-	my_system->printinterval(miss_rate, mpki, icount % interval); //print to miss rate file
+	my_system->printinterval(miss_rate, mpki, icount % interval, prefetch_issued, prefetch_hits); //print to miss rate file
 	miss_rate.close(); //close the miss rate file
 	mpki.close(); //clode the mpki dump file
 	accessfile.close(); //close the accesses per interval dump file
+	prefetch_issued.close(); //close the prefetch issued this interval file
+	prefetch_hits.close(); //close the prefetch issued hits this interval
 	config_file.open(CONFIG_FILE);
 	my_system->printConfig(config_file);
 	config_file.close();
@@ -207,6 +211,8 @@ int main(int argc, char *argv[])
 	miss_rate.open(MISS_RATE); //open the miss rate file
 	mpki.open(MPKI); //open the periodic mpki dump file
 	accessfile.open(ACCESSES); //open the accesses per interval dump
+	prefetch_issued.open(pre_issue);
+	prefetch_hits.open(pre_hits);
 	RTN_AddInstrumentFunction(Routine, 0);
 	PIN_AddFiniFunction(Fini, 0);
 	// Never returns

@@ -25,7 +25,7 @@ class Hierarchy
 		void handleAccess(Access element);
 		void signalWB(uint64_t addr, bool isDirty);
 		void printResults(std::ostream& out);
-		void printinterval(std::ostream& out, std::ostream& out2, long long unsigned int);
+		void printinterval(std::ostream& out, std::ostream& out2, long long unsigned int, std::ostream& out3, std::ostream& out4);
 		void printConfig(std::ostream& out);
 		void finishSimu();
 		void openNewTimeFrame();
@@ -46,7 +46,8 @@ class Hierarchy
 		uint64_t stats_dirtyWB_MainMem;
 		uint64_t stats_readMainMem;
 		uint64_t stats_writeMainMem;
-
+		uint64_t issued_pre; //hassan
+		uint64_t hits_prefetch; //hassan
 		uint64_t stats_issuedPrefetchs;
 		uint64_t stats_hitsPrefetch;
 };

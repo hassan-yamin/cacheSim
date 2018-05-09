@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define MISS_RATE "missrate.txt"
 #define MPKI "mpki.txt"
 #define ACCESSES "num_accesses.txt" //num of accesses per interval
+#define pre_issue "prefetch_issued.txt" // number of prefetch issued this interval
+#define pre_hits "prefetch_hits.txt" // number of prefetcher hits this interval
 
 #define PREDICTOR_TIME_FRAME 1E5
 #define interval 100000

@@ -43,7 +43,9 @@ Hierarchy::Hierarchy(string policy)
 	stats_readMainMem = 0;
 	
 	stats_hitsPrefetch = 0;
+	hits_prefetch = 0;
 	stats_issuedPrefetchs = 0;
+	issued_pre = 0;//hassan
 }
 
 
@@ -87,10 +89,14 @@ Hierarchy::printResults(ostream& out)
 }
 
 void
-Hierarchy::printinterval(ostream& out, ostream& out2, unsigned long long int x)
+Hierarchy::printinterval(ostream& out, ostream& out2, unsigned long long int x, std::ostream& out3, std::ostream& out4)
 {
 
 	m_cache->printinterval(out, out2, x);
+	out3 << stats_issuedPrefetchs - issued_pre << endl;
+	out4 << stats_hitsPrefetch - hits_prefetch << endl;
+	issued_pre = stats_issuedPrefetchs;
+	hits_prefetch = stats_hitsPrefetch;
 }
 
 void
