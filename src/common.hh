@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define pre_hits "prefetch_hits.txt" // number of prefetcher hits this interval
 
 #define PREDICTOR_TIME_FRAME 1E5
-#define interval 100000
+#define interval 100000000
 
 #define ONE_MB 1048576
 #define TWO_MB 2*ONE_MB
