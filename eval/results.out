@@ -1,0 +1,30 @@
+Execution finished
+NB Access handled 100000000
+NB insts handled 235130631
+last interval 35130631
+Printing results : 
+Cache:Results
+Cache:TotalAccess	100000000
+Cache:TotalHits	98984573
+Cache:TotalMiss	1015427
+Cache:MissRate	1.01543%
+Cache:Eviction	2086518
+Cache:BlockClassification
+Cache:FetchedBlocks	2087030
+Cache:DeadBlocks	768113	36.8041%
+Cache:ROBlocks	756076	36.2274%
+Cache:WOBlocks	86500	4.14465%
+Cache:RWBlocks	476341	22.8239%
+Cache:instructionsDistribution
+Cache:DATA_READ	63303770
+Cache:DATA_WRITE	36696230
+Cache:DATA_PREFETCH	1071603
+***************
+Prefetcher:Stats
+Prefetcher:issuedPrefetch	1071603
+Prefetcher:hitPrefecth	473846
+Prefetcher:prefetchErrors	597757
+MainMem:ReadFetch	914677
+MainMem:WriteFetch	151977
+MainMem:CleanWB	1518047
+MainMem:DirtyWB	568471

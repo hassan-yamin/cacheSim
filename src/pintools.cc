@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 	start_debug = 1;
 	
 	init_default_parameters();
-	my_system = new Hierarchy("LRU");
+	my_system = new Hierarchy("RRIP");
 	my_system->stopWarmup();
 	miss_rate.open(MISS_RATE); //open the miss rate file
 	mpki.open(MPKI); //open the periodic mpki dump file

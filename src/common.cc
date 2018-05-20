@@ -159,7 +159,7 @@ init_default_parameters()
 	simu_parameters.prefetchStreams = 64; 
 //	simu_parameters.enablePrefetch = false;
 
-	simu_parameters.policy = "LRU";
+	simu_parameters.policy = "RRIP";
 }
 
 

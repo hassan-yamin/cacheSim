@@ -63,6 +63,66 @@ LRUPolicy::evictPolicy(int set)
 	}
 	return smallest_index;
 }
+//do this for RRIP policy
+RRIPPolicy::RRIPPolicy(int nbAssoc , int nbSet , std::vector<std::vector<CacheEntry*> > cache_entries) : ReplacementPolicy(nbAssoc , nbSet, cache_entries) 
+{
+
+}
+
+void
+RRIPPolicy::updatePolicy(uint64_t set, uint64_t index, int hints = 0)
+{	
+	//when hit, move the block to 0
+	m_cache_entries[set][index]->policyInfo = 0;
+}
+void RRIPPolicy::insertionPolicy(uint64_t set, uint64_t index, int hints)
+{
+	//insert at 6
+	m_cache_entries[set][index]->policyInfo = 6;
+}
+int
+RRIPPolicy::evictPolicy(int set)
+{
+	int largest_time = m_cache_entries[set][0]->policyInfo , smallest_index = 0;
+// if there is an empty space, no need to evict
+	for(int i = 0 ; i < m_assoc ; i++){
+		if(!m_cache_entries[set][i]->isValid) 
+			return i;
+	}
+// find the largest RRPV value
+	for(int i = 0 ; i < m_assoc ; i++){
+		if(m_cache_entries[set][i]->policyInfo > largest_time){
+			largest_time =  m_cache_entries[set][i]->policyInfo;
+		//	largest_index = i;
+		}
+	}
+//find the left most index with the largest time
+	for(int i = 0 ; i < m_assoc ; i++){
+		if(m_cache_entries[set][i]->policyInfo == largest_time){
+			smallest_index = i;
+			goto breakout;
+		}
+	}
+
+breakout:
+//update +1 on all of the cache blocks
+	for(int i = 0 ; i < m_assoc ; i++){
+		if(i!= smallest_index){
+			if (m_cache_entries[set][i]->policyInfo < max)
+				{
+					m_cache_entries[set][i]->policyInfo +=1;
+			}
+		}
+	}
+
+
+	return smallest_index;
+}
+
+
+
+
+
 
 int 
 RandomPolicy::evictPolicy(int set)

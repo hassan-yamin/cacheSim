@@ -62,7 +62,9 @@ Cache::Cache(int size , int assoc , int blocksize , string policy, Hierarchy* my
 	if(m_policy == "LRU")
 		 m_replacementPolicy = new LRUPolicy(m_assoc, m_nb_set, m_dataArray);	
 	else if(m_policy == "Random")
-		 m_replacementPolicy = new RandomPolicy(m_assoc, m_nb_set, m_dataArray);	
+		 m_replacementPolicy = new RandomPolicy(m_assoc, m_nb_set, m_dataArray);
+	else if(m_policy == "RRIP")
+		 m_replacementPolicy = new RRIPPolicy(m_assoc, m_nb_set, m_dataArray);	
 	else {
 		assert(false && "Cannot initialize replacement policy for Cache");
 	}

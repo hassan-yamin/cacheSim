@@ -54,5 +54,20 @@ class RandomPolicy : public ReplacementPolicy {
 		~RandomPolicy(){};
 };
 
+class RRIPPolicy : public ReplacementPolicy {
 
+	public :
+		RRIPPolicy() : ReplacementPolicy(){ m_cpt=1;};
+		RRIPPolicy(int nbAssoc , int nbSet , std::vector<std::vector<CacheEntry*> > cache_entries);
+		void updatePolicy(uint64_t set, uint64_t index, int hints);
+		void insertionPolicy(uint64_t set, uint64_t index, int hints);
+		int evictPolicy(int set);
+		~RRIPPolicy() {};
+	private : 
+		uint64_t m_cpt;
+		int insert = 6;
+		int hit = 0;
+		int max = 8;
+		
+};
 #endif
