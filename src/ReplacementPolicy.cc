@@ -115,7 +115,6 @@ breakout:
 		}
 	}
 
-
 	return smallest_index;
 }
 
