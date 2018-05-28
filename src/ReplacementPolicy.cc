@@ -93,10 +93,10 @@ RRIPPolicy::evictPolicy(int set)
 	for(int i = 0 ; i < m_assoc ; i++){
 		if(m_cache_entries[set][i]->policyInfo > largest_time){
 			largest_time =  m_cache_entries[set][i]->policyInfo;
-		//	largest_index = i;
+	
 		}
 	}
-//find the left most index with the largest time
+//find the first index with the largest time
 	for(int i = 0 ; i < m_assoc ; i++){
 		if(m_cache_entries[set][i]->policyInfo == largest_time){
 			smallest_index = i;
@@ -107,12 +107,12 @@ RRIPPolicy::evictPolicy(int set)
 breakout:
 //update +1 on all of the cache blocks
 	for(int i = 0 ; i < m_assoc ; i++){
-		if(i!= smallest_index){
-			if (m_cache_entries[set][i]->policyInfo < max)
-				{
-					m_cache_entries[set][i]->policyInfo +=1;
-			}
+		
+		if (i!= smallest_index && m_cache_entries[set][i]->policyInfo < max)
+		{
+			m_cache_entries[set][i]->policyInfo = m_cache_entries[set][i]->policyInfo + 1;
 		}
+		
 	}
 
 	return smallest_index;

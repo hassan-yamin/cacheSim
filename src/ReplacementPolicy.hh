@@ -67,7 +67,7 @@ class RRIPPolicy : public ReplacementPolicy {
 		uint64_t m_cpt;
 		int insert = 6;
 		int hit = 0;
-		int max = 8;
+		int max = 7;
 		
 };
 #endif
