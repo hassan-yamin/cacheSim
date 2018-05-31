@@ -40,8 +40,8 @@ inline VOID docount() {
 		accessfile << mem_accesses_interval << endl;
 		mem_accesses_interval = 0;
 	}
-	if (cpt_time == num_accesses)
-		
+//	if (cpt_time == num_accesses)
+	if(icount == num_accesses)
 		PIN_ExitApplication(0);
 	}
 
@@ -187,6 +187,7 @@ int main(int argc, char *argv[])
     }
 */
 	int readarg;
+	int policytouse;
 	sscanf(argv[5],"%d",&readarg);
 	simu_parameters.size = readarg;
 
@@ -200,13 +201,17 @@ int main(int argc, char *argv[])
 		simu_parameters.enablePrefetch = false;
 	
 	sscanf(argv[8],"%llu",&num_accesses);
-	
+	sscanf(argv[9],"%d",&readarg);
+	policytouse = readarg;
 	PIN_InitLock(&lock);
 	cpt_time = 0;
 	start_debug = 1;
 	
 	init_default_parameters();
-	my_system = new Hierarchy("RRIP");
+	if (policytouse)
+		my_system = new Hierarchy("RRIP");
+	else 
+		my_system = new Hierarchy("LRU");
 	my_system->stopWarmup();
 	miss_rate.open(MISS_RATE); //open the miss rate file
 	mpki.open(MPKI); //open the periodic mpki dump file
