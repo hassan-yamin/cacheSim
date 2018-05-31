@@ -41,9 +41,9 @@ inline VOID docount() {
 		mem_accesses_interval = 0;
 	}
 //	if (cpt_time == num_accesses)
-	if(icount == num_accesses)
+	if (icount == num_accesses)
 		PIN_ExitApplication(0);
-	}
+}
 
 
 VOID access(uint64_t pc , uint64_t addr, MemCmd type, int size, int id_thread)
@@ -208,9 +208,9 @@ int main(int argc, char *argv[])
 	start_debug = 1;
 	
 	init_default_parameters();
-	if (policytouse)
+	if (policytouse == 1)
 		my_system = new Hierarchy("RRIP");
-	else 
+	if (policytouse == 0)
 		my_system = new Hierarchy("LRU");
 	my_system->stopWarmup();
 	miss_rate.open(MISS_RATE); //open the miss rate file
