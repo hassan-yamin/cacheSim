@@ -39,6 +39,11 @@ inline VOID docount() {
 		my_system->printinterval(miss_rate, mpki, interval, prefetch_issued, prefetch_hits);
 		accessfile << mem_accesses_interval << endl;
 		mem_accesses_interval = 0;
+		miss_rate.flush(); 
+		mpki.flush(); 
+		accessfile.flush();; 
+		prefetch_issued.flush();;
+		prefetch_hits.flush();
 	}
 //	if (cpt_time == num_accesses)
 	if (icount == num_accesses)
@@ -125,6 +130,11 @@ VOID Fini(INT32 code, VOID *v)
 	my_system->finishSimu();
 	accessfile << mem_accesses_interval << endl;
 	my_system->printinterval(miss_rate, mpki, icount % interval, prefetch_issued, prefetch_hits); //print to miss rate file
+	miss_rate.flush(); 
+	mpki.flush(); 
+	accessfile.flush();; 
+	prefetch_issued.flush();;
+	prefetch_hits.flush();
 	miss_rate.close(); //close the miss rate file
 	mpki.close(); //clode the mpki dump file
 	accessfile.close(); //close the accesses per interval dump file
