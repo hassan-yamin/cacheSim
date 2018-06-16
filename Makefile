@@ -1,5 +1,5 @@
-EXEC = ./obj-intel64/cacheSim2.so
-EXEC_RELEASE = ./obj-intel64/cacheSim_release2.so
+EXEC = ./obj-intel64/cacheSim.so
+EXEC_RELEASE = ./obj-intel64/cacheSim_release.so
 OUTPUT_FILES=config.ini *.out pin.log
 FLAGS_DEBUGS = 
 ifdef TEST
