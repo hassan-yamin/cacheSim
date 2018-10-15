@@ -39,7 +39,7 @@ LRUPolicy::LRUPolicy(int nbAssoc , int nbSet , std::vector<std::vector<CacheEntr
 }
 
 void
-LRUPolicy::updatePolicy(uint64_t set, uint64_t index, int hints = 0)
+LRUPolicy::updatePolicy(uint64_t set, uint64_t index, Access element)
 {	
 	m_cache_entries[set][index]->policyInfo = m_cpt;
 	m_cpt++;
@@ -70,12 +70,12 @@ RRIPPolicy::RRIPPolicy(int nbAssoc , int nbSet , std::vector<std::vector<CacheEn
 }
 
 void
-RRIPPolicy::updatePolicy(uint64_t set, uint64_t index, int hints = 0)
+RRIPPolicy::updatePolicy(uint64_t set, uint64_t index, Access element)
 {	
 	//when hit, move the block to 0
 	m_cache_entries[set][index]->policyInfo = 0;
 }
-void RRIPPolicy::insertionPolicy(uint64_t set, uint64_t index, int hints)
+void RRIPPolicy::insertionPolicy(uint64_t set, uint64_t index, Access element)
 {
 	//insert at 6
 	m_cache_entries[set][index]->policyInfo = 6;

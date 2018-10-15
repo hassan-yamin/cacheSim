@@ -220,8 +220,11 @@ int main(int argc, char *argv[])
 	init_default_parameters();
 	if (policytouse == 1)
 		my_system = new Hierarchy("RRIP");
-	if (policytouse == 0)
+	else if (policytouse == 0)
 		my_system = new Hierarchy("LRU");
+	else if (policytouse == 2)
+		my_system = new Hierarchy("SHiP");
+		
 	my_system->stopWarmup();
 	miss_rate.open(MISS_RATE); //open the miss rate file
 	mpki.open(MPKI); //open the periodic mpki dump file

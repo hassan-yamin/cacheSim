@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common.hh"
 
 #include "ReplacementPolicy.hh"
+#include "SHiPReplacementPolicy.hh"
 
 using namespace std;
 
@@ -65,6 +66,8 @@ Cache::Cache(int size , int assoc , int blocksize , string policy, Hierarchy* my
 		 m_replacementPolicy = new RandomPolicy(m_assoc, m_nb_set, m_dataArray);
 	else if(m_policy == "RRIP")
 		 m_replacementPolicy = new RRIPPolicy(m_assoc, m_nb_set, m_dataArray);	
+	else if(m_policy == "SHiP")
+		 m_replacementPolicy = new SHiPPolicy(m_assoc, m_nb_set, m_dataArray);	
 	else {
 		assert(false && "Cannot initialize replacement policy for Cache");
 	}
@@ -165,7 +168,7 @@ Cache::handleAccess(Access element)
 
 		deallocate(replaced_entry);
 		allocate(address , id_set , id_assoc, element.m_pc, element.isPrefetch());			
-		m_replacementPolicy->insertionPolicy(id_set , id_assoc , 0);
+		m_replacementPolicy->insertionPolicy(id_set , id_assoc , element);
 			
 		if(!m_isWarmup && !element.isPrefetch()){				
 			stats_miss[stats_index]++;			
@@ -182,7 +185,7 @@ Cache::handleAccess(Access element)
 
 		DPRINTF(DebugCache , "It is a hit ! Block[%#lx] Set=%d, Way=%d\n" , block_addr, id_set, id_assoc);
 		
-		m_replacementPolicy->updatePolicy(id_set , id_assoc, 0);
+		m_replacementPolicy->updatePolicy(id_set , id_assoc, element);
 		
 		if(element.isWrite())
 		{
